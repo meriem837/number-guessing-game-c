@@ -1,7 +1,11 @@
 #include <stdio.h>
-#define M 500
+#include <stdlib.h>  
+#include <time.h>
 
 int main() {
+    srand(time(0));           
+    int M = rand() % 1000 + 1;  
+
     int n, compteur = 0;
     do {
         printf("Donner une valeur entre 1 et 1000 : ");
