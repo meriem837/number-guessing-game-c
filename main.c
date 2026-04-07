@@ -3,6 +3,9 @@
 #include <time.h>
 
 int main() {
+    srand(time(0));
+    char replay;
+    do{
     int level;
     printf("Choose a difficulty level:\n");
     printf("(1) Easy: between 1 and 50, 10 attempts\n");
@@ -23,14 +26,12 @@ int main() {
         max = 1000;
         attempts = 5;
     } else {
-        printf("Invalid level.\n");
-        return 0;
+         printf("Invalid level, You should enter a the number of the level you want.\n");
+        continue;
     }
-
-    srand(time(0));
+     
     int M = rand() % max + 1;
-
-    int n, compteur = 0;
+    int n, compteur = 0,guessed=0;
 
     for (int i = 0; i < attempts; i++) {
         printf("Enter a value between 1 and %d: ", max);
@@ -49,11 +50,16 @@ int main() {
             printf("Too big!\n");
         } else {
             printf("Bravo! You did it in %d attempts.\n", compteur);
-            return 0;
+            guessed=1;
+            break;
         }
     }
-
+    if(guessed==0){
     printf("Game Over! The number was %d.\n", M);
+    }
+    printf("Do you want to try again? (y)Yes OR (n)No:");
+    scanf(" %c", &replay);
+    } while (replay=='y');
     return 0;
 }
 
