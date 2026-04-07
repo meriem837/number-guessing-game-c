@@ -4,7 +4,7 @@
 
 int main() {
     srand(time(0));
-    char replay;
+    char replay,hint;
     do{
     int level;
     printf("Choose a difficulty level:\n");
@@ -45,9 +45,26 @@ int main() {
         compteur++;
 
         if (n < M) {
-            printf("Too small!\n");
+            printf("Too small! (Do you need a hint? y/n)\n");
+            scanf(" %c", &hint);
+
+            if (hint == 'y') {
+                if (abs(M - n) < 10) {
+                    printf("you are very close, make a little jump\n");
+                    } else {
+                        printf("make a bigger jump\n");
+                    }
+                }
         } else if (n > M) {
-            printf("Too big!\n");
+            printf("Too big! (Do you need a hint? y/n)\n");
+            scanf(" %c", &hint);
+            if (hint == 'y') {
+                 if (abs(M - n) < 10) {
+                    printf("you are very close, make a little jump\n");
+                    } else {
+                        printf("make a bigger jump\n");
+                    }
+                }
         } else {
             printf("Bravo! You did it in %d attempts.\n", compteur);
             guessed=1;
