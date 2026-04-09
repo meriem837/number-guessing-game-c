@@ -4,8 +4,51 @@
 
 int main() {
     srand(time(0));
-    char replay,hint;
+    char replay,hint,history;
+    int bestscore = 0;
+    FILE *file;
+
     do{
+        printf("do you want to see the history of the 10 lasts scores? y/n \n");
+        scanf(" %c", &history);
+        if(history=='y'){
+            file = fopen("score.txt", "r");
+            if (file == NULL) {
+                printf("No previous scores.\n");
+            }else{
+            int scores[10];
+            int i = 0, num;
+            while (fscanf(file, "%d", &num) == 1) {
+                scores[i % 10] = num;  
+                i++;
+            }
+            fclose(file);
+            int count;
+            if (i < 10) {
+                count = i;
+            } else {
+                count = 10;
+            }
+            printf("Last %d scores: ", count);
+            for(int j=0; j<count; j++){
+                printf("%d\t", scores[j]);
+            }
+            printf("\n");
+            }
+        }
+
+        file = fopen("best.txt", "r");
+        if(file != NULL) {
+            fscanf(file, "%d", &bestscore);
+            fclose(file);
+        }
+
+        if (bestscore == 0) {
+    printf("No best score yet.\n");
+} else {
+    printf("Best score: %d/10\n", bestscore);
+}
+
     int level;
     printf("Choose a difficulty level:\n");
     printf("(1) Easy: between 1 and 50, 10 attempts\n");
@@ -45,7 +88,7 @@ int main() {
         compteur++;
 
         if (n < M) {
-            printf("Too small! (Do you need a hint? y/n)\n");
+            printf("Too small! (Do you need a hint? enter (y) if yes)\n");
             scanf(" %c", &hint);
 
             if (hint == 'y') {
@@ -56,7 +99,7 @@ int main() {
                     }
                 }
         } else if (n > M) {
-            printf("Too big! (Do you need a hint? y/n)\n");
+            printf("Too big! (Do you need a hint? enter (y) if yes)\n");
             scanf(" %c", &hint);
             if (hint == 'y') {
                  if (abs(M - n) < 10) {
@@ -74,6 +117,26 @@ int main() {
     if(guessed==0){
     printf("Game Over! The number was %d.\n", M);
     }
+
+    int maxScore = 10;
+    int score = (attempts - compteur) * maxScore / attempts;
+    printf("Your score: %d/10 \n", score);
+
+    if(bestscore < score) {
+    bestscore = score;
+    file = fopen("best.txt", "w");
+    if(file != NULL) {
+        fprintf(file, "%d", bestscore);
+        fclose(file);
+    }
+}
+file = fopen("score.txt", "a");
+if(file != NULL) {
+    fprintf(file, "%d\n", score); 
+    fclose(file);
+}
+
+
     printf("Do you want to try again? (y)Yes OR (n)No:");
     scanf(" %c", &replay);
     } while (replay=='y');
