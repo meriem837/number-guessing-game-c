@@ -36,10 +36,10 @@ The game includes multiple difficulty levels, a scoring system, and file-based s
 ## How to Run
 
 1. Compile the code:
-   gcc game.c -o game
+   gcc main.c -o game.exe
 
 2. Run the program:
-   ./game
+   ./game.exe
 
 ## What I Learned
 
